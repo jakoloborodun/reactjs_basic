@@ -3,3 +3,4 @@
 
 # Ignore bundler config
 **/node_modules
+static/*
