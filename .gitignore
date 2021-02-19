@@ -1,0 +1,5 @@
+# IDE generated files
+.idea
+
+# Ignore bundler config
+**/node_modules
