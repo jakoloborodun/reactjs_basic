@@ -6,10 +6,11 @@ class Message extends Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
     author: PropTypes.string,
+    creation: PropTypes.string,
   };
 
   render() {
-    const { text, author, creation } = this.props;
+    const { text, author = '', creation } = this.props;
 
     return <div className="message-item">
       <span className="message-sender"><b>{ author }</b>{' '}</span>
