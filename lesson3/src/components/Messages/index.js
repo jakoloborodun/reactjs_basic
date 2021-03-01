@@ -1,1 +1,2 @@
-export { Messages } from './Messages';
+export { Message } from './Message';
+export { MessageField } from './MessageField';

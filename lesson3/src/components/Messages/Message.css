@@ -1,17 +1,19 @@
-.message {
-    border-radius: 10px;
-    background-color: lightblue;
+.message-item {
+    border-radius: .5rem;
+    color: #fff;
     max-width: 200px;
     margin: 10px 0;
     padding: 10px 15px;
-}
-
-.message__text {
-    font-weight: bold;
+    display: flex;
     font-size: 1rem;
 }
 
-.message__author {
-    font-size: 0.4rem;
-    color: grey;
+.message-left {
+    flex-shrink: 0;
+    margin-right: .5rem;
+}
+
+.message-right {
+    flex: 1 1 0;
+    padding: .5rem;
 }

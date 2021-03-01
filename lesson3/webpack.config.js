@@ -48,7 +48,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'React App',
+            title: 'React App HW3',
             template: 'index.html',
         }),
     ],
