@@ -1,13 +1,13 @@
 import React from 'react';
-import {Layout} from '../Layout';
+import {Router} from '../Router';
 
 function App() {
 
-    return (
-        <div>
-          <Layout/>
-        </div>
-    );
+  return (
+      <div>
+        <Router/>
+      </div>
+  );
 }
 
-export { App };
+export {App};

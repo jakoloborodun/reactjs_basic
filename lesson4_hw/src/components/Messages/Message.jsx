@@ -1,8 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import PropTypes from 'prop-types';
-import './Message.css';
+import Avatar from '@material-ui/core/Avatar';
 
 class Message extends Component {
   static propTypes = {

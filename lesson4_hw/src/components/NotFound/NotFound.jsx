@@ -5,9 +5,11 @@ const NotFound = () => {
   return (
       <div>
         <b>Page not found.</b>
-        <Link to={"/"}>To Front</Link>
+        <div>
+          <Link to='/'>To Front</Link>
+        </div>
       </div>
-  )
+  );
 };
 
 export { NotFound };

@@ -1,11 +1,17 @@
 import React from 'react';
-import {Component, createRef} from 'react';
-import TextField from '@material-ui/core/TextField';
+import { Component, createRef } from 'react';
+import { TextField, Icon, IconButton } from '@material-ui/core';
+import PropTypes from 'prop-types';
+
 import { Message } from './Message';
-import Icon from "@material-ui/core/Icon";
-import IconButton from "@material-ui/core/IconButton";
+
+import './Message.css';
 
 class MessageField extends Component {
+  static propTypes = {
+    currentChat: PropTypes.string,
+  };
+
   state = {
     messages: [
         {text: 'Hi there!', author: 'Derp', creation: new Date().toLocaleString()},
