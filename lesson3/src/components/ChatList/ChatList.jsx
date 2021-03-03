@@ -5,9 +5,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SendIcon from '@material-ui/icons/Send';
-import StarBorder from '@material-ui/icons/StarBorder';
 
-function ChatList() {
+const chats = ['chat 1', 'chat2', 'chat3'];
+// const chats = [{name: 'chat 1', id: 1}];
+
+const ChatList = () => {
 
   return (
       <List
@@ -19,30 +21,19 @@ function ChatList() {
           </ListSubheader>
         }
       >
-        <ListItem button>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <ListItemText primary="Chat 1" />
-        </ListItem>
+        {chats.map((chat, index) => (
+            <ListItem button key={index}>
+              <ListItemIcon>
+                <SendIcon />
+              </ListItemIcon>
+              <ListItemText primary={chat} />
+            </ListItem>
+        ))}
 
-        <ListItem button>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <ListItemText primary="Chat 2" />
-        </ListItem>
-
-        <ListItem button>
-          <ListItemIcon>
-            <StarBorder />
-          </ListItemIcon>
-          <ListItemText primary="Chat 3" />
-        </ListItem>
 
       </List>
   );
 
-}
+};
 
 export { ChatList };

@@ -1,9 +1,9 @@
 import React from 'react';
-import {Component} from 'react';
+import {Component, createRef} from 'react';
 import TextField from '@material-ui/core/TextField';
 import { Message } from './Message';
 import Icon from "@material-ui/core/Icon";
-import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 
 class MessageField extends Component {
   state = {
@@ -13,6 +13,8 @@ class MessageField extends Component {
     ],
     input: '',
   };
+
+  fieldRef = createRef();
 
   sendMessage = (message) => {
     this.setState({
@@ -44,6 +46,8 @@ class MessageField extends Component {
         });
       }, 1000);
     }
+
+    this.fieldRef.current.scrollTop = this.fieldRef.current.scrollHeight;
   }
 
   handleClick = (message) => {
@@ -64,8 +68,8 @@ class MessageField extends Component {
     const { messages = [] } = this.state;
 
     return (
-        <div>
-          <div className='messages'>
+        <>
+          <div className='messages' ref={this.fieldRef}>
             {messages.map((item, index) => (
                 <Message key={index} text={item.text} author={item.author}
                          creation={item.creation}/>
@@ -79,25 +83,22 @@ class MessageField extends Component {
             padding: '1rem'
           }}>
             <TextField
-                id="outlined-basic"
-                label="Message"
+                className='text-field'
+                value={this.state.input}
                 fullWidth={true}
-                variant="outlined"
+                label='New message'
                 onChange={this.handleChange}
                 onKeyUp={(event) => this.handleKeyDown(event, this.state.input)}
-                value={this.state.input}
             />
-
-            <Button
-                onClick={() => this.handleClick(this.state.input)}
+            <IconButton
                 color='primary'
                 variant='contained'
-                startIcon={<Icon>send</Icon>}
+                onClick={() => this.handleClick(this.state.input)}
             >
-              Send Message
-            </Button>
+              <Icon>send</Icon>
+            </IconButton>
           </div>
-        </div>
+        </>
     );
   }
 }
