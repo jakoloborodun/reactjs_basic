@@ -8,7 +8,9 @@ import { NotFound } from '../NotFound';
 const Router = () => {
   return (
       <Switch>
-        <Route exact path="/" component={ Layout }/>
+        {/*<Route exact path="/" component={ Layout }/>*/}
+        <Route exact path="/" render={ () =>
+            <Layout chatId={ 1 }/> }/>
         <Route exact path="/profile" component={ Header }/>
         <Route exact path="/chat/:chatId" component={ Layout }/>
         <Route component={ NotFound }/>

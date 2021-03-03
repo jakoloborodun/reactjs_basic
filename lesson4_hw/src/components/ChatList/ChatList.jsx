@@ -9,39 +9,44 @@ import {
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-// const chats = ['chat 1', 'chat2', 'chat3'];
-const chats = [
-    { name: 'chat 1', id: 1 },
-    { name: 'chat 2', id: 2 },
-    { name: 'chat 3', id: 3 },
-];
+class ChatList extends React.Component {
 
-const ChatList = () => {
+  state = {
+    chats : [
+      { name: 'chat 1', id: 1 },
+      { name: 'chat 2', id: 2 },
+      { name: 'bazinga', id: 3 },
+    ]
+  };
 
-  return (
-      <List
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-        subheader={
-          <ListSubheader component="div" id="nested-list-subheader">
-            Chat List
-          </ListSubheader>
-        }
-      >
-        {chats.map((chat, index) => (
-            <Link key={index} to={`/chat/${chat.id}`}>
-              <ListItem button>
-                <ListItemIcon>
-                  <SendIcon />
-                </ListItemIcon>
-                <ListItemText primary={chat.name} />
-              </ListItem>
-            </Link>
-        ))}
+  render() {
+    const { chats = [] } = this.state;
 
-      </List>
-  );
+    return (
+        <List
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+            subheader={
+              <ListSubheader component="div" id="nested-list-subheader">
+                Chat List
+              </ListSubheader>
+            }
+        >
+          {chats.map((chat, index) => (
+              <Link key={ index } to={ `/chat/${ chat.id }` }
+                    style={ { textDecoration: 'none' } }>
+                <ListItem button>
+                  <ListItemIcon>
+                    <SendIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={chat.name} />
+                </ListItem>
+              </Link>
+          ))}
 
-};
+        </List>
+    );
+  }
+}
 
 export { ChatList };

@@ -9,47 +9,66 @@ import './Message.css';
 
 class MessageField extends Component {
   static propTypes = {
-    currentChat: PropTypes.string,
+    currentChat: PropTypes.number,
+    author: PropTypes.string,
+  };
+
+  static defaultProps = {
+    author: 'Derp',
   };
 
   state = {
-    messages: [
-        {text: 'Hi there!', author: 'Derp', creation: new Date().toLocaleString()},
-        {text: 'What a nice day!', author: 'Derp', creation: new Date().toLocaleString()},
-    ],
+    messages: {
+      1: [
+        {
+          text: 'Hi there!',
+          author: this.props.author,
+          creation: new Date().toLocaleString()
+        },
+        {
+          text: 'What a nice day!',
+          author: this.props.author,
+          creation: new Date().toLocaleString()
+        },
+      ],
+      2: [],
+      3: [{
+        text: 'Hello from bazinga chat',
+        author: this.props.author,
+        creation: new Date().toLocaleString()
+      }],
+    },
     input: '',
   };
 
   fieldRef = createRef();
 
-  sendMessage = (message) => {
+  sendMessage = (message, author) => {
+    const { currentChat } = this.props;
+
     this.setState({
-      messages: [
+      messages: {
         ...this.state.messages,
-        {
-          text: message,
-          author: 'Derp',
-          creation: new Date().toLocaleString(),
-        },
-      ],
+        [currentChat]: [
+          ...this.state.messages[currentChat],
+          {
+            text: message,
+            author: author,
+            creation: new Date().toLocaleString(),
+          },
+        ],
+      },
       input: '',
     });
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevState.messages.length < this.state.messages.length
-        && this.state.messages[this.state.messages.length - 1].author === 'Derp') {
+    const { currentChat } = this.props;
+
+    if (prevState.messages[currentChat].length < this.state.messages[currentChat].length
+        && this.state.messages[currentChat][this.state.messages[currentChat].length - 1].author === 'Derp') {
       setTimeout(() => {
-        this.setState({
-          messages: [
-            ...this.state.messages,
-            {
-              text: 'go away! I am just robot',
-              author: 'Bot',
-              creation: new Date().toLocaleString(),
-            },
-          ],
-        });
+        this.sendMessage('go away! I am just robot', 'Bot');
       }, 1000);
     }
 
@@ -57,7 +76,7 @@ class MessageField extends Component {
   }
 
   handleClick = (message) => {
-    this.sendMessage(message);
+    this.sendMessage(message, this.props.author);
   };
 
   handleChange = (event) => {
@@ -66,44 +85,49 @@ class MessageField extends Component {
 
   handleKeyDown = (event, message) => {
     if (event.key === 'Enter') {
-      this.sendMessage(message);
+      this.sendMessage(message, this.props.author);
     }
   };
 
   render() {
     const { messages = [] } = this.state;
+    const { currentChat } = this.props;
 
     return (
         <>
-          <div className='messages' ref={this.fieldRef}>
-            {messages.map((item, index) => (
-                <Message key={index} text={item.text} author={item.author}
-                         creation={item.creation}/>
-            ))}
-          </div>
+          {currentChat && (
+              <>
+                <div className='messages' ref={this.fieldRef}>
+                  {messages[currentChat] &&
+                  messages[currentChat].map((item, index) => (
+                      <Message key={index} {...item} />
+                  ))}
+                </div>
 
-          <div className='send-area' style={{
-            boxSizing: 'border-box',
-            width: '100%',
-            display: 'flex',
-            padding: '1rem'
-          }}>
-            <TextField
-                className='text-field'
-                value={this.state.input}
-                fullWidth={true}
-                label='New message'
-                onChange={this.handleChange}
-                onKeyUp={(event) => this.handleKeyDown(event, this.state.input)}
-            />
-            <IconButton
-                color='primary'
-                variant='contained'
-                onClick={() => this.handleClick(this.state.input)}
-            >
-              <Icon>send</Icon>
-            </IconButton>
-          </div>
+                <div className='send-area' style={{
+                  boxSizing: 'border-box',
+                  width: '100%',
+                  display: 'flex',
+                  padding: '1rem'
+                }}>
+                  <TextField
+                      className='text-field'
+                      value={this.state.input}
+                      fullWidth={true}
+                      label='New message'
+                      onChange={this.handleChange}
+                      onKeyUp={(event) => this.handleKeyDown(event, this.state.input)}
+                  />
+                  <IconButton
+                      color='primary'
+                      variant='contained'
+                      onClick={() => this.handleClick(this.state.input)}
+                  >
+                    <Icon>send</Icon>
+                  </IconButton>
+                </div>
+              </>
+          )}
         </>
     );
   }

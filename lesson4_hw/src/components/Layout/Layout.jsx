@@ -17,18 +17,22 @@ class _Layout extends Component {
   };
 
   render() {
-    const { match } = this.props;
-    console.log(match);
+    const { match, chatId = 1 } = this.props;
+    let currentChat = match.params.chatId
+        ? parseInt(match.params.chatId, 10)
+        : chatId;
+    console.log(match, chatId);
 
     return (
         <div className="layout">
-          <Header className="header" title='Test React GB'/>
-          <div className="layout-inner" style={{width: '100%', height: '500px', display: 'flex'}}>
+          <Header className="header" title={ 'Chat ' + currentChat }/>
+          <div className="layout-inner"
+               style={ { width: '100%', height: '500px', display: 'flex' } }>
             <div className="layout-inner-left">
               <ChatList className="chat-list"/>
             </div>
             <div className="layout-inner-right">
-              <MessageField currentChat={match.params.chatId} />
+              <MessageField currentChat={ currentChat }/>
             </div>
           </div>
         </div>

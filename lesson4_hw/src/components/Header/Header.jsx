@@ -1,23 +1,36 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
   AppBar,
   Toolbar,
-  Typography
+  Typography,
+  Button
 } from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles';
 
-class Header extends Component {
+const styles = {
+  title: {
+    flexGrow: 1,
+  },
+};
+
+class _Header extends Component {
   render() {
+    const { classes } = this.props;
+    console.log(classes);
+
     return (
         <AppBar position="static">
           <Toolbar variant="dense">
-            <Typography variant="h6">
-              {this.props.title}
+            <Typography variant="h6" className={ classes.title }>
+              { this.props.title }
             </Typography>
-
+            <Button href={ "/profile" } color="inherit">Profile</Button>
           </Toolbar>
         </AppBar>
     )
   }
 }
 
-export {Header}
+const Header = withStyles(styles)(_Header);
+
+export { Header }
