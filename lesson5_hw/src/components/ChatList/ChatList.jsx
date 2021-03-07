@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   List,
   ListSubheader,
@@ -11,31 +13,29 @@ import {
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-class ChatList extends React.Component {
+import { addChat } from '../../redux/actions/chatActions';
+
+class _ChatList extends React.Component {
+
+  static propTypes = {
+    chats: PropTypes.array,
+    addChat: PropTypes.func.isRequired,
+  };
 
   state = {
-    chats : [
-      { name: 'chat 1', id: 1 },
-      { name: 'chat 2', id: 2 },
-      { name: 'bazinga', id: 3 },
-    ],
     chatName: '',
   };
 
   addChat = () => {
-    const { chats } = this.state;
-
-    const lastChat = chats[chats.length - 1];
-    const chatId = lastChat.id + 1;
+    this.state.chatName && this.props.addChat(this.state.chatName);
 
     this.setState({
-      chats: [...chats, { name: this.state.chatName, id: chatId }],
       chatName: '',
     });
   };
 
   render() {
-    const { chats = [] } = this.state;
+    const { chats = [] } = this.props;
 
     return (
         <div className='chat-list'>
@@ -89,5 +89,11 @@ class ChatList extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  chats: state.chat.chats,
+});
+
+const ChatList = connect(mapStateToProps, { addChat })(_ChatList);
 
 export { ChatList };
