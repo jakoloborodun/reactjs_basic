@@ -3,6 +3,7 @@ import {
   AppBar,
   Toolbar,
   Typography,
+  ButtonGroup,
   Button
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
@@ -24,7 +25,11 @@ class _Header extends Component {
             <Typography variant="h6" className={ classes.title }>
               { this.props.title }
             </Typography>
-            <Button href={ "/profile" } color="inherit">Profile</Button>
+            <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+              <Button href={ "/profile" }>Profile</Button>
+              <Button href={ "/" }>Chats</Button>
+            </ButtonGroup>
+
           </Toolbar>
         </AppBar>
     )
