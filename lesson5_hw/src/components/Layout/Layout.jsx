@@ -21,7 +21,6 @@ class _Layout extends Component {
     let currentChat = match.params.chatId
         ? parseInt(match.params.chatId, 10)
         : chatId;
-    console.log(match, chatId);
 
     return (
         <div className="layout">

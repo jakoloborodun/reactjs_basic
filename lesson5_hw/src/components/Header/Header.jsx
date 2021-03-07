@@ -17,7 +17,6 @@ const styles = {
 class _Header extends Component {
   render() {
     const { classes } = this.props;
-    console.log(classes);
 
     return (
         <AppBar position="static">

@@ -45,12 +45,13 @@ class MessageField extends Component {
 
   sendMessage = (message, author) => {
     const { currentChat } = this.props;
+    const prevMessages = this.state.messages[currentChat] || [];
 
     this.setState({
       messages: {
         ...this.state.messages,
         [currentChat]: [
-          ...this.state.messages[currentChat],
+          ...prevMessages,
           {
             text: message,
             author: author,
@@ -64,9 +65,8 @@ class MessageField extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { currentChat } = this.props;
-
-    if (prevState.messages[currentChat].length < this.state.messages[currentChat].length
-        && this.state.messages[currentChat][this.state.messages[currentChat].length - 1].author === 'Derp') {
+    if (prevState.messages[currentChat]?.length < this.state.messages[currentChat]?.length
+        && this.state.messages[currentChat][this.state.messages[currentChat]?.length - 1].author === 'Derp') {
       setTimeout(() => {
         this.sendMessage('go away! I am just robot', 'Bot');
       }, 1000);
