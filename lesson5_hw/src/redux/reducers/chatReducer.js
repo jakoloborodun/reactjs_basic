@@ -6,6 +6,10 @@ const initialState = {
         { name: 'chat 1', id: 1 },
         { name: 'chat 2', id: 2 },
     ],
+    // chats : {
+    //     1: [{ name: 'chat 1', id: 1 }],
+    //     2: [{ name: 'chat 2', id: 2 }],
+    // },
     messages: {
         1: [{ text: 'Hello from redux', author: 'bot' }],
     },
