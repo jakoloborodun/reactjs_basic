@@ -21,7 +21,6 @@ class _Layout extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { match, chats, chatId = 1 } = this.props;
     let currentChatId = match.params.chatId
         ? parseInt(match.params.chatId, 10)
