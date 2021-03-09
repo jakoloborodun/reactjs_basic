@@ -25,7 +25,7 @@ class _Header extends Component {
               { this.props.title }
             </Typography>
             <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-              <Button href={ "/profile" }>Profile</Button>
+              <Button href={ "/profile" }>{ this.props.profile }</Button>
               <Button href={ "/" }>Chats</Button>
             </ButtonGroup>
 

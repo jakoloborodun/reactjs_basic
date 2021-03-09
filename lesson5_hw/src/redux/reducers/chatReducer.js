@@ -11,7 +11,7 @@ const initialState = {
     //     2: [{ name: 'chat 2', id: 2 }],
     // },
     messages: {
-        1: [{ text: 'Hello from redux', author: 'bot' }],
+        1: [{ text: 'Hello from redux', author: 'bot', creation: new Date().toLocaleString() }],
     },
 };
 
@@ -30,6 +30,7 @@ export const chatReducer = (state = initialState, action) => {
                         {
                             text: action.payload.text,
                             author: action.payload.author,
+                            creation: action.payload.creation,
                         },
                     ],
                 },

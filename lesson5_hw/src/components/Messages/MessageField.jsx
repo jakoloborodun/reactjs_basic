@@ -1,72 +1,54 @@
 import React from 'react';
 import { Component, createRef } from 'react';
 import { TextField, Icon, IconButton } from '@material-ui/core';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { Message } from './Message';
 
 import './Message.css';
+import { sendMessage } from "../../redux/actions/messageActions";
 
-class MessageField extends Component {
+class _MessageField extends Component {
   static propTypes = {
     currentChat: PropTypes.number,
-    author: PropTypes.string,
-  };
-
-  static defaultProps = {
-    author: 'Derp',
+    messages: PropTypes.object.isRequired,
+    sendMessage: PropTypes.func.isRequired,
+    profileName: PropTypes.string,
   };
 
   state = {
-    messages: {
-      1: [
-        {
-          text: 'Hi there!',
-          author: this.props.author,
-          creation: new Date().toLocaleString()
-        },
-        {
-          text: 'What a nice day!',
-          author: this.props.author,
-          creation: new Date().toLocaleString()
-        },
-      ],
-      2: [],
-      3: [{
-        text: 'Hello from bazinga chat',
-        author: this.props.author,
-        creation: new Date().toLocaleString()
-      }],
-    },
     input: '',
   };
 
   fieldRef = createRef();
 
   sendMessage = (message, author) => {
-    const { currentChat } = this.props;
-    const prevMessages = this.state.messages[currentChat] || [];
+    const currentChat = this.props.currentChat;
+    const currentAuthor = author.length ? author : this.props.profileName;
+
+    (this.state.input || currentAuthor !== this.props.profileName)
+    && this.props.sendMessage(message, currentAuthor, new Date().toLocaleString(), currentChat);
 
     this.setState({
-      messages: {
-        ...this.state.messages,
-        [currentChat]: [
-          ...prevMessages,
-          {
-            text: message,
-            author: author,
-            creation: new Date().toLocaleString(),
-          },
-        ],
-      },
       input: '',
     });
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { currentChat } = this.props;
-    if (prevState.messages[currentChat]?.length < this.state.messages[currentChat]?.length
-        && this.state.messages[currentChat][this.state.messages[currentChat]?.length - 1].author === 'Derp') {
+    const currentChat = this.props.currentChat;
+    const author = this.props.profileName;
+
+    let prevLength = prevProps.messages[currentChat]?.length
+        ? prevProps.messages[currentChat].length
+        : 0;
+    let curLength = this.props.messages[currentChat]?.length
+        ? this.props.messages[currentChat].length
+        : 0;
+
+    if (
+        (prevLength < curLength) && curLength > 0
+        && this.props.messages[currentChat][curLength - 1].author === author) {
       setTimeout(() => {
         this.sendMessage('go away! I am just robot', 'Bot');
       }, 1000);
@@ -76,7 +58,7 @@ class MessageField extends Component {
   }
 
   handleClick = (message) => {
-    this.sendMessage(message, this.props.author);
+    this.sendMessage(message, this.props.profileName);
   };
 
   handleChange = (event) => {
@@ -85,13 +67,12 @@ class MessageField extends Component {
 
   handleKeyDown = (event, message) => {
     if (event.key === 'Enter') {
-      this.sendMessage(message, this.props.author);
+      this.sendMessage(message, this.props.profileName);
     }
   };
 
   render() {
-    const { messages = [] } = this.state;
-    const { currentChat } = this.props;
+    const { messages = {}, currentChat } = this.props;
 
     return (
         <>
@@ -132,5 +113,12 @@ class MessageField extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  messages: state.chat.messages,
+  profileName: state.profile.profileName,
+});
+
+const MessageField = connect(mapStateToProps, { sendMessage })(_MessageField);
 
 export { MessageField };

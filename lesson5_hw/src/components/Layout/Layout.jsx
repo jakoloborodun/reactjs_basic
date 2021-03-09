@@ -17,9 +17,11 @@ class _Layout extends Component {
     location: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     chats: PropTypes.array,
+    profileName: PropTypes.string,
   };
 
   render() {
+    console.log(this.props);
     const { match, chats, chatId = 1 } = this.props;
     let currentChatId = match.params.chatId
         ? parseInt(match.params.chatId, 10)
@@ -30,14 +32,14 @@ class _Layout extends Component {
 
     return (
         <div className="layout">
-          <Header className="header" title={ currentChat.name }/>
+          <Header className="header" title={ currentChat.name } profile={ this.props.profileName } />
           <div className="layout-inner"
                style={ { width: '100%', height: '500px', display: 'flex' } }>
             <div className="layout-inner-left">
               <ChatList className="chat-list"/>
             </div>
             <div className="layout-inner-right">
-              <MessageField currentChat={ currentChat }/>
+              <MessageField currentChat={ currentChat.id }/>
             </div>
           </div>
         </div>
@@ -47,6 +49,7 @@ class _Layout extends Component {
 
 const mapStateToProps = (state) => ({
   chats: state.chat.chats,
+  profileName: state.profile.profileName,
 });
 
 const Layout = compose(
