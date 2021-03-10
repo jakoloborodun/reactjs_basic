@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+
 import {
   List,
   ListSubheader,
@@ -9,11 +11,19 @@ import {
   ListItemText,
   ListItemIcon,
   TextField,
-  Icon, IconButton
+  Icon, IconButton, withStyles
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
 import { addChat } from '../../redux/actions/chatActions';
+
+import './ChatList.css';
+
+const styles = {
+  active: {
+    backgroundColor: 'rgb(226, 226, 226)',
+  },
+};
 
 class _ChatList extends React.Component {
 
@@ -35,7 +45,7 @@ class _ChatList extends React.Component {
   };
 
   render() {
-    const { chats = [] } = this.props;
+    const { chats = [], classes } = this.props;
 
     return (
         <div className='chat-list'>
@@ -49,15 +59,14 @@ class _ChatList extends React.Component {
               }
           >
             { chats.map((chat, index) => (
-                <Link key={ index } to={ `/chat/${ chat.id }` }
-                      style={ { textDecoration: 'none' } }>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <SendIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary={ chat.name }/>
-                  </ListItem>
-                </Link>
+                <ListItem button key={ index } to={ `/chat/${ chat.id }` }
+                          component={ NavLink }
+                          activeClassName={ classes.active }>
+                  <ListItemIcon>
+                    <SendIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary={ chat.name }/>
+                </ListItem>
             )) }
 
           </List>
@@ -94,6 +103,9 @@ const mapStateToProps = (state) => ({
   chats: state.chat.chats,
 });
 
-const ChatList = connect(mapStateToProps, { addChat })(_ChatList);
+const ChatList = compose(
+    withStyles(styles),
+    connect(mapStateToProps, { addChat }),
+)(_ChatList);
 
 export { ChatList };

@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -7,6 +8,7 @@ import {
   Button
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
 
 const styles = {
   title: {
@@ -15,6 +17,11 @@ const styles = {
 };
 
 class _Header extends Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    profile: PropTypes.string.isRequired,
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -25,8 +32,9 @@ class _Header extends Component {
               { this.props.title }
             </Typography>
             <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-              <Button href={ "/profile" }>{ this.props.profile }</Button>
-              <Button href={ "/" }>Chats</Button>
+              <Button component={ Link }
+                      to={ "/profile" }>{ this.props.profile }</Button>
+              <Button component={ Link } to={ "/" }>Chats</Button>
             </ButtonGroup>
 
           </Toolbar>
