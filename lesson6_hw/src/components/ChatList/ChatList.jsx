@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-import { addChat } from '../../redux/actions/chatActions';
+import { addChat } from '../../actions/chatActions';
 
 import './ChatList.css';
 

@@ -16,6 +16,14 @@
     font-size: 1rem;
 }
 
+.message-item-bot {
+    background-color: #4caf50;
+}
+
+.message-item-owner {
+    background-color: #1976d2;
+}
+
 .message-left {
     flex-shrink: 0;
     margin-right: .5rem;

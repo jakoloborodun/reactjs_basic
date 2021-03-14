@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Message } from './Message';
 
 import './Message.css';
-import { sendMessage } from "../../redux/actions/messageActions";
+import { sendMessage } from "../../actions/messageActions";
 
 class _MessageField extends Component {
   static propTypes = {
@@ -35,25 +35,7 @@ class _MessageField extends Component {
     });
   };
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const currentChat = this.props.currentChat;
-    const author = this.props.profileName;
-
-    let prevLength = prevProps.messages[currentChat]?.length
-        ? prevProps.messages[currentChat].length
-        : 0;
-    let curLength = this.props.messages[currentChat]?.length
-        ? this.props.messages[currentChat].length
-        : 0;
-
-    if (
-        (prevLength < curLength) && curLength > 0
-        && this.props.messages[currentChat][curLength - 1].author === author) {
-      setTimeout(() => {
-        this.sendMessage('go away! I am just robot', 'Bot');
-      }, 1000);
-    }
-
+  componentDidUpdate() {
     this.fieldRef.current.scrollTop = this.fieldRef.current.scrollHeight;
   }
 
@@ -81,7 +63,7 @@ class _MessageField extends Component {
                 <div className='messages' ref={this.fieldRef}>
                   {messages[currentChat] &&
                   messages[currentChat].map((item, index) => (
-                      <Message key={index} {...item} />
+                      <Message key={index} profile={this.props.profileName} {...item} />
                   ))}
                 </div>
 

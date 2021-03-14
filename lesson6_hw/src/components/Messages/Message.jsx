@@ -8,13 +8,16 @@ class Message extends Component {
     text: PropTypes.string.isRequired,
     author: PropTypes.string,
     creation: PropTypes.string,
+    profile: PropTypes.string,
   };
 
   render() {
-    const { text, author = '', creation } = this.props;
+    const { text, author = '', creation, profile } = this.props;
+    let messageColorClass = author !== profile
+        ? 'message-item-bot'
+        : 'message-item-owner';
 
-    return <div className="message-item" style={ { backgroundColor: this.props.author === 'Bot' ?
-          '#4caf50' : '#1976d2' } }>
+    return <div className={'message-item ' + messageColorClass }>
       <div className='message-left'>
         <Avatar variant="rounded">
           { author.charAt(0) }

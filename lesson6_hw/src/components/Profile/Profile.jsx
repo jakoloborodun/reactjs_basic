@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Icon, IconButton, TextField } from "@material-ui/core";
 
 import { Header } from "../Header";
-import { changeName } from "../../redux/actions/profileActions";
+import { changeName } from "../../actions/profileActions";
 
 import './Profile.css';
 
