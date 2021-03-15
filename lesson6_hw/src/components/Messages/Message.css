@@ -1,0 +1,35 @@
+.messages {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.message-item {
+    border-radius: .5rem;
+    color: #fff;
+    max-width: 200px;
+    margin: 10px 0;
+    padding: 10px 15px;
+    display: flex;
+    font-size: 1rem;
+}
+
+.message-item-bot {
+    background-color: #4caf50;
+}
+
+.message-item-owner {
+    background-color: #1976d2;
+}
+
+.message-left {
+    flex-shrink: 0;
+    margin-right: .5rem;
+}
+
+.message-right {
+    flex: 1 1 0;
+    padding: .5rem;
+}
