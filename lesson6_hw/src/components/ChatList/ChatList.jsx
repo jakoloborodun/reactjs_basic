@@ -14,6 +14,7 @@ import {
   Icon, IconButton, withStyles
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import MarkunreadIcon from '@material-ui/icons/Markunread';
 
 import { addChat } from '../../actions/chatActions';
 
@@ -30,6 +31,8 @@ class _ChatList extends React.Component {
   static propTypes = {
     chats: PropTypes.array,
     addChat: PropTypes.func.isRequired,
+    currentChat: PropTypes.object.isRequired,
+    match: PropTypes.object,
   };
 
   state = {
@@ -66,6 +69,17 @@ class _ChatList extends React.Component {
                     <SendIcon/>
                   </ListItemIcon>
                   <ListItemText primary={ chat.name }/>
+
+                  {(() => {
+                    if (chat.isUnread) {
+                      return (
+                          <ListItemIcon>
+                            <MarkunreadIcon/>
+                          </ListItemIcon>
+                      )
+                    }
+                  })()}
+
                 </ListItem>
             )) }
 

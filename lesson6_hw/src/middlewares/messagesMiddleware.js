@@ -1,4 +1,5 @@
 import { SEND_MESSAGE, sendMessage } from '../actions/messageActions';
+import { toggleUnread } from '../actions/chatActions';
 
 export const messagesMiddleware = (store) => (next) => (action) => {
     switch (action.type) {
@@ -19,8 +20,10 @@ export const messagesMiddleware = (store) => (next) => (action) => {
                 // highlight chat.
                 let router = store.getState().router;
                 if (router.location.pathname !== '/chat/' + action.payload.chatId) {
-                    console.log('let\'s highlight this chat!');
-
+                    console.log('let\'s highlight this chat!', action.payload.chatId);
+                    store.dispatch(
+                        toggleUnread(action.payload.chatId)
+                    );
                 }
             }
         }

@@ -35,7 +35,8 @@ class _Layout extends Component {
           <div className="layout-inner"
                style={ { width: '100%', height: '500px', display: 'flex' } }>
             <div className="layout-inner-left">
-              <ChatList className="chat-list"/>
+              <ChatList className="chat-list" currentChat={ currentChat }
+                        match={ match }/>
             </div>
             <div className="layout-inner-right">
               <MessageField currentChat={ currentChat.id }/>

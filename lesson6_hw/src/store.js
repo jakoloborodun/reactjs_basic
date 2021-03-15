@@ -12,12 +12,16 @@ import middlewares from './middlewares';
 const initialState = {
   chat: {
     chats: [
-        { name: 'chat 1', id: 1 },
-        { name: 'chat 2', id: 2 }
+      { name: 'chat 1', id: 1, isUnread: false },
+      { name: 'chat 2', id: 2, isUnread: false },
     ],
     messages: {
       1: [
-        { text: 'Hello from redux', author: 'bot', creation: new Date().toLocaleString() },
+        {
+          text: 'Hello from redux',
+          author: 'bot',
+          creation: new Date().toLocaleString(),
+        },
       ],
     },
   }
